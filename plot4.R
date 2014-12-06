@@ -1,6 +1,5 @@
 require(data.table)
 
-
 # Read top two rows of dataset to get column classes and variable names
 top <- read.table('household_power_consumption.txt',
                   nrows=2,
@@ -11,7 +10,6 @@ top <- read.table('household_power_consumption.txt',
 classes <- sapply(top,class)
 headers <- colnames(top)
 
-
 # Read the portion of the dataset including dates to be plotted (1 MB RAM).
 #   (reading full dataset requires > 100 MB RAM)
 d <- data.table(read.table(pipe('grep ^[1-2]/2/2007 household_power_consumption.txt'), 
@@ -21,11 +19,9 @@ d <- data.table(read.table(pipe('grep ^[1-2]/2/2007 household_power_consumption.
                    header=F,
                    sep=';'))
 
-
 # combine date and time columns
 datetime <- as.POSIXlt(paste(d$Date,d$Time), 
                        format='%d/%m/%Y %H:%M:%S')
-
 
 #Create Plot 4
 png(filename='plot4.png', 
@@ -41,13 +37,10 @@ with(d, plot(datetime,
              ylab='Global Active Power', 
              type='l'))
 
-
 # Subplot 2
 with(d, plot(datetime,
              Voltage,
              type='l'))
-
-
 
 # Subplot 3 (from Plot 3)
 with(d, plot(datetime,
@@ -71,4 +64,3 @@ with(d, plot(datetime,
              type='l'))
 
 dev.off()
-
